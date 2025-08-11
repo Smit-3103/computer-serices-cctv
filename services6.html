@@ -290,7 +290,9 @@
   const myHeaders = new Headers();
 const userId = "6883540cf19d2c5397fa0b3e"
 
-  fetch(`http://localhost:5000/api/product/allService?userId=${userId}`)
+const API_BASE_URL = "https://1w10dfjm-5000.inc1.devtunnels.ms/"
+
+  fetch(`${API_BASE_URL}api/product/allService?userId=${userId}`)
   .then((response) => response.json())
   .then((result) =>{
     // console.log("result.data :",result.data[0]);
@@ -302,11 +304,11 @@ const userId = "6883540cf19d2c5397fa0b3e"
   }
 )
 
-  fetch(`http://localhost:5000/api/product/Service6?userId=${userId}`)
+  fetch(`${API_BASE_URL}api/product/Service6?userId=${userId}`)
   .then((response) => response.json())
   .then((result) =>{
-    const image1 =  `http://localhost:5000/${result?.latestProduct?.mainImage.replace(/\\/g, "/")}`;
-    const image2 =  `http://localhost:5000/${result?.latestProduct?.section2Image.replace(/\\/g, "/")}`;
+    const image1 =  `${API_BASE_URL}${result?.latestProduct?.mainImage.replace(/\\/g, "/")}`;
+    const image2 =  `${API_BASE_URL}${result?.latestProduct?.section2Image.replace(/\\/g, "/")}`;
 
     document.getElementById("services-section-1-description-1").textContent = result.latestProduct.mainDescription
     document.getElementById("services-section-2-description-1").textContent = result.latestProduct.section2Description

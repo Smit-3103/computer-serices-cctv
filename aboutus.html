@@ -336,12 +336,13 @@
   <script>
     const myHeaders = new Headers();
     const userId = "6883540cf19d2c5397fa0b3e"
+    const API_BASE_URL = "https://1w10dfjm-5000.inc1.devtunnels.ms/"
 
-    fetch(`http://localhost:5000/api/site/get-home-about-us?userId=${userId}`)
+    fetch(`${API_BASE_URL}api/site/get-home-about-us?userId=${userId}`)
   .then((response) => response.json())
   .then((result) =>{
- const imagePath1 = `http://localhost:5000/${result.image1.replace(/\\/g, "/")}`;
- const imagePath2 = `http://localhost:5000/${result.image2.replace(/\\/g, "/")}`;
+ const imagePath1 = `${API_BASE_URL}${result.image1.replace(/\\/g, "/")}`;
+ const imagePath2 = `${API_BASE_URL}${result.image2.replace(/\\/g, "/")}`;
 
  document.getElementById("h-aboutus-photo-1").src = imagePath1
  document.getElementById("h-aboutus-photo-2").src = imagePath2
@@ -357,15 +358,15 @@
 )
   .catch((error) => console.error("Error fetching banner:", error));
     
-  fetch(`http://localhost:5000/api/about/get-about-us-section-1?userId=${userId}`)
+  fetch(`${API_BASE_URL}api/about/get-about-us-section-1?userId=${userId}`)
   .then((response) => response.json())
   .then((result) =>{
 
     console.log("result :",result);
     
     
- const imagePath1 = `http://localhost:5000/${result.image1.replace(/\\/g, "/")}`;
- const imagePath2 = `http://localhost:5000/${result.image2.replace(/\\/g, "/")}`;
+ const imagePath1 = `${API_BASE_URL}${result.image1.replace(/\\/g, "/")}`;
+ const imagePath2 = `${API_BASE_URL}${result.image2.replace(/\\/g, "/")}`;
 
  document.getElementById("h-services-2-description-main-tagline-1").textContent = result.tagline1
  document.getElementById("h-services-2-description-heading-1").textContent = result.heading1
@@ -385,11 +386,11 @@
 )
   .catch((error) => console.error("Error fetching banner:", error));
 
-  fetch(`http://localhost:5000/api/about/get-about-us-section-2?userId=${userId}`)
+  fetch(`${API_BASE_URL}api/about/get-about-us-section-2?userId=${userId}`)
   .then((response) => response.json())
   .then((result) =>{
     
- const imagePath = `http://localhost:5000/${result.image.replace(/\\/g, "/")}`;
+ const imagePath = `${API_BASE_URL}${result.image.replace(/\\/g, "/")}`;
 
     document.getElementById("a-services-2-heading-tagline").textContent = result.tagline
     document.getElementById("a-services-2-heading").textContent = result.heading
@@ -406,7 +407,7 @@
 )
   .catch((error) => console.error("Error fetching banner:", error));
 
-      // fetch(`http://localhost:5000/api/contact/Contact?userId=${userId}`)
+      // fetch(`${API_BASE_URL}api/contact/Contact?userId=${userId}`)
       // .then((response) => response.json())
       // .then((result) => {
 

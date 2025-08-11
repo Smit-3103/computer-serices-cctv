@@ -1,15 +1,17 @@
 let year = new Date
 
 Promise.all([
-  fetch(`http://localhost:5000/api/contact/Contact?userId=${userId}`).then(res => res.json()),
-  fetch(`http://localhost:5000/api/site/get-footer?userId=${userId}`).then(res => res.json()),
-  fetch(`http://localhost:5000/api/product/allService?userId=${userId}`).then(res => res.json())
+  fetch(`${API_BASE_URL}api/contact/Contact?userId=${userId}`).then(res => res.json()),
+  fetch(`${API_BASE_URL}api/site/get-footer?userId=${userId}`).then(res => res.json()),
+  fetch(`${API_BASE_URL}api/product/allService?userId=${userId}`).then(res => res.json())
 ]).then(([contactResult, footerResult,allServices]) => {
 
 
   const { address, addressLink, mobileNumber, email } = contactResult
 
   const { footerLogo, headerLogo, description, facebookLink, InstagramLink, linkedinLink, youtubeLink, xLink } = footerResult
+
+  const API_BASE_URL = "https://1w10dfjm-5000.inc1.devtunnels.ms/"
 
   console.log("All Services:", allServices.data);
 
@@ -22,8 +24,8 @@ Promise.all([
       });
     });
 
-  const footerLogoUrl =  `http://localhost:5000/${footerLogo.replace(/\\/g, "/")}`;
-  const headerLogoUrl =  `http://localhost:5000/${headerLogo.replace(/\\/g, "/")}`;
+  const footerLogoUrl =  `${API_BASE_URL}${footerLogo.replace(/\\/g, "/")}`;
+  const headerLogoUrl =  `${API_BASE_URL}${headerLogo.replace(/\\/g, "/")}`;
 
   document.querySelector(".footer").innerHTML = `
     <section class="footer-section-1">
@@ -230,7 +232,7 @@ Promise.all([
       </div>
     </div>
 `
-    fetch(`http://localhost:5000/api/product/allService?userId=${userId}`)
+    fetch(`${API_BASE_URL}api/product/allService?userId=${userId}`)
   .then((response) => response.json())
   .then((result) =>{
     // console.log("result.data :",result.data[0]);

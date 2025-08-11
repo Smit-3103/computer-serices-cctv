@@ -128,8 +128,9 @@
   <script>
     const myHeaders = new Headers();
     const userId = "6883540cf19d2c5397fa0b3e"
+    const API_BASE_URL = "https://1w10dfjm-5000.inc1.devtunnels.ms/"
 
-    fetch(`http://localhost:5000/api/contact/Contact?userId=${userId}`)
+    fetch(`${API_BASE_URL}api/contact/Contact?userId=${userId}`)
       .then((response) => response.json())
       .then((result) => {
 
@@ -153,7 +154,7 @@
         document.querySelector(".c-map-section").innerHTML = result.embadedMap;
       })
 
-          fetch(`http://localhost:5000/api/product/allService?userId=${userId}`)
+          fetch(`${API_BASE_URL}api/product/allService?userId=${userId}`)
       .then((response) => response.json())
       .then((result) => {
         console.log("result :", result);

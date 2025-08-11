@@ -120,8 +120,10 @@
   const myHeaders = new Headers();
   const userId = "6883540cf19d2c5397fa0b3e"
 
+  const API_BASE_URL = "https://1w10dfjm-5000.inc1.devtunnels.ms/"
 
-  fetch(`http://localhost:5000/api/product/allService?userId=${userId}`)
+
+  fetch(`${API_BASE_URL}api/product/allService?userId=${userId}`)
   .then((response) => response.json())
   .then((result) =>{
     // console.log("result.data :",result.data[0]);
@@ -129,7 +131,7 @@
     result.data.map((el,index)=>{
       console.log("el :",el);
       
-      const imagePath = `http://localhost:5000/${el?.mainImage.replace(/\\/g, "/")}`;
+      const imagePath = `${API_BASE_URL}${el?.mainImage.replace(/\\/g, "/")}`;
 
       document.querySelector(".s-services-cards-div").innerHTML += `
       <a href="services1.html">
