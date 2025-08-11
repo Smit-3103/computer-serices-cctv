@@ -27,6 +27,8 @@ Promise.all([
   const footerLogoUrl =  `${API_BASE_URL}${footerLogo.replace(/\\/g, "/")}`;
   const headerLogoUrl =  `${API_BASE_URL}${headerLogo.replace(/\\/g, "/")}`;
 
+  
+
   document.querySelector(".footer").innerHTML = `
     <section class="footer-section-1">
       <div class="footer-logo-div">
@@ -190,6 +192,29 @@ Promise.all([
     </section>
 `
 
+    const hamburger = document.getElementById("hamburger");
+    const navMenu = document.getElementById("navMenu");
+    const overlay = document.getElementById("overlay");
+    const closeBtn = document.getElementById("closeNavBtn");
+
+    function openMobileNav() {
+      if (window.innerWidth <= 860) {
+        navMenu.classList.add("active");
+        overlay.classList.add("show");
+        overlay.classList.remove("hidden");
+      }
+    }
+
+    function closeMobileNav() {
+      navMenu.classList.remove("active");
+      overlay.classList.remove("show");
+      overlay.classList.add("hidden");
+    }
+
+    hamburger.addEventListener("click", openMobileNav);
+    closeBtn.addEventListener("click", closeMobileNav);
+    overlay.addEventListener("click", closeMobileNav);
+    
   document.querySelector(".header").innerHTML = `
     <div id="overlay" class="overlay hidden"></div>
     <div class="header-container">
