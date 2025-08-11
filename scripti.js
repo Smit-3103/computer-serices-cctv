@@ -4,7 +4,7 @@ Promise.all([
   fetch(`${API_BASE_URL}api/contact/Contact?userId=${userId}`).then(res => res.json()),
   fetch(`${API_BASE_URL}api/site/get-footer?userId=${userId}`).then(res => res.json()),
   fetch(`${API_BASE_URL}api/product/allService?userId=${userId}`).then(res => res.json())
-]).then(([contactResult, footerResult,allServices]) => {
+]).then(([contactResult, footerResult, allServices]) => {
 
 
   const { address, addressLink, mobileNumber, email } = contactResult
@@ -191,30 +191,6 @@ Promise.all([
       <h5 class="footer-copyright-heading">Copyright © <span id="year">${year.getFullYear()}</span> All Rights Reserved by Akaay Enterprise. Developed by <a href="https://shriiitrackingsolution.in/">Shriii Tracking Solution</a>.</h5>
     </section>
 `
-
-    const hamburger = document.getElementById("hamburger");
-    const navMenu = document.getElementById("navMenu");
-    const overlay = document.getElementById("overlay");
-    const closeBtn = document.getElementById("closeNavBtn");
-
-    function openMobileNav() {
-      if (window.innerWidth <= 860) {
-        navMenu.classList.add("active");
-        overlay.classList.add("show");
-        overlay.classList.remove("hidden");
-      }
-    }
-
-    function closeMobileNav() {
-      navMenu.classList.remove("active");
-      overlay.classList.remove("show");
-      overlay.classList.add("hidden");
-    }
-
-    hamburger.addEventListener("click", openMobileNav);
-    closeBtn.addEventListener("click", closeMobileNav);
-    overlay.addEventListener("click", closeMobileNav);
-    
   document.querySelector(".header").innerHTML = `
     <div id="overlay" class="overlay hidden"></div>
     <div class="header-container">
@@ -257,16 +233,28 @@ Promise.all([
       </div>
     </div>
 `
-    fetch(`${API_BASE_URL}api/product/allService?userId=${userId}`)
-  .then((response) => response.json())
-  .then((result) =>{
-    // console.log("result.data :",result.data[0]);
 
-    result.data.map((el,index)=>{
-      console.log("el :",el);
-      document.querySelectorAll(`service${index}-name`).forEach(elName => elName.textContent = el.name)
-    })
-  }
-)
-})
 
+    const hamburger = document.getElementById("hamburger");
+    const navMenu = document.getElementById("navMenu");
+    const overlay = document.getElementById("overlay");
+    const closeBtn = document.getElementById("closeNavBtn");
+
+    function openMobileNav() {
+      if (window.innerWidth <= 860) {
+        navMenu.classList.add("active");
+        overlay.classList.add("show");
+        overlay.classList.remove("hidden");
+      }
+    }
+
+    function closeMobileNav() {
+      navMenu.classList.remove("active");
+      overlay.classList.remove("show");
+      overlay.classList.add("hidden");
+    }
+
+    hamburger.addEventListener("click", openMobileNav);
+    closeBtn.addEventListener("click", closeMobileNav);
+    overlay.addEventListener("click", closeMobileNav);
+  })
