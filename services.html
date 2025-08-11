@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/reponsive.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <header class="header">
+
+  </header>
+  <main>
+    <section class="s-banner">
+      <h1>Our Services</h1>
+      <span><a href="index.html">Home</a> <span class="banner-slash"> / </span> Services</span>
+    </section>
+
+    <section class="s-services-cards-div">
+      <a href="services1.html">
+        <div class="s-services-card" id="s-services-card-1">
+          <p id="s-services-1">COMPUTER / LAPTOP SALES AND SERVICE</p>
+        </div>
+      </a>
+      <a href="services2.html">
+        <div class="s-services-card" id="s-services-card-2">
+          <p id="s-services-2">CCTV CAMERA SALES AND SERVICES</p>
+        </div>
+      </a>
+      <a href="services3.html">
+        <div class="s-services-card" id="s-services-card-3">
+          <p id="s-services-3">VDP,EM LOCK AND BIO MATRIC SALES AND SERVICES</p>
+        </div>
+      </a>
+      <a href="services4.html">
+        <div class="s-services-card" id="s-services-card-4">
+          <p id="s-services-4">REFUB LAPTOP/DESKTOP SALES</p>
+        </div>
+      </a>
+      <a href="services5.html">
+        <div class="s-services-card" id="s-services-card-5">
+          <p id="s-services-5">CUSTOM AND GAMMING PC BUILT</p>
+        </div>
+      </a>
+      <a href="services6.html">
+        <div class="s-services-card" id="s-services-card-6">
+          <p id="s-services-6">COMPUTER LAPTOP ASSESSORIES</p>
+        </div>
+      </a>
+    </section>
+  </main>
+
+  <footer class="footer">
+
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById("hamburger");
+    const navMenu = document.getElementById("navMenu");
+    const overlay = document.getElementById("overlay");
+    const closeBtn = document.getElementById("closeNavBtn");
+
+    function openMobileNav() {
+      if (window.innerWidth <= 860) {
+        navMenu.classList.add("active");
+        overlay.classList.add("show");
+        overlay.classList.remove("hidden");
+      }
+    }
+
+    function closeMobileNav() {
+      navMenu.classList.remove("active");
+      overlay.classList.remove("show");
+      overlay.classList.add("hidden");
+    }
+
+    hamburger.addEventListener("click", openMobileNav);
+    closeBtn.addEventListener("click", closeMobileNav);
+    overlay.addEventListener("click", closeMobileNav);
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const allHeadings = document.querySelectorAll(".a-faq-main-card-heading-div");
+      const allDescriptions = document.querySelectorAll(".a-faq-main-card-description-card");
+
+      allHeadings.forEach((heading, i) => {
+        heading.addEventListener("click", () => {
+          const currentDesc = allDescriptions[i];
+          const allPlus = document.querySelectorAll(".s-faq-svg-plus");
+          const allMinus = document.querySelectorAll(".s-faq-svg-minus");
+
+          const plusIcon = heading.querySelector(".s-faq-svg-plus");
+          const minusIcon = heading.querySelector(".s-faq-svg-minus");
+
+          const isActive = currentDesc.classList.contains("active");
+
+          // Hide all cards and reset icons
+          allDescriptions.forEach(desc => desc.classList.remove("active"));
+          allPlus.forEach(icon => icon.style.display = "inline");
+          allMinus.forEach(icon => icon.style.display = "none");
+
+          // If current is not active, activate it
+          if (!isActive) {
+            currentDesc.classList.add("active");
+            plusIcon.style.display = "none";
+            minusIcon.style.display = "inline";
+          }
+        });
+      });
+    });
+  </script>
+
+<script>
+  document.querySelector(".s-services-cards-div").innerHTML = ""
+  const myHeaders = new Headers();
+  const userId = "6883540cf19d2c5397fa0b3e"
+
+
+  fetch(`http://localhost:5000/api/product/allService?userId=${userId}`)
+  .then((response) => response.json())
+  .then((result) =>{
+    // console.log("result.data :",result.data[0]);
+
+    result.data.map((el,index)=>{
+      console.log("el :",el);
+      
+      const imagePath = `http://localhost:5000/${el?.mainImage.replace(/\\/g, "/")}`;
+
+      document.querySelector(".s-services-cards-div").innerHTML += `
+      <a href="services1.html">
+        <div class="s-services-card" id="s-services-card-${el.serviceType}">
+          <p id="s-services-${el.serviceType}">${el.name}</p>
+        </div>
+      </a>
+      `
+      document.getElementById(`s-services-card-${el.serviceType}`).style.backgroundImage = `url('${imagePath}')`
+    })
+  }
+)
+
+</script>
+
+  <script src="scripti.js"></script>
+</body>
+
+</html>
