@@ -11,6 +11,9 @@
 </head>
 
 <body>
+    <div id="loader-wrapper">
+  <span class="loader"></span>
+</div>
   <header class="header">
 
   </header>
@@ -58,30 +61,6 @@
 
   </footer>
 
-  <script>
-    const hamburger = document.getElementById("hamburger");
-    const navMenu = document.getElementById("navMenu");
-    const overlay = document.getElementById("overlay");
-    const closeBtn = document.getElementById("closeNavBtn");
-
-    function openMobileNav() {
-      if (window.innerWidth <= 860) {
-        navMenu.classList.add("active");
-        overlay.classList.add("show");
-        overlay.classList.remove("hidden");
-      }
-    }
-
-    function closeMobileNav() {
-      navMenu.classList.remove("active");
-      overlay.classList.remove("show");
-      overlay.classList.add("hidden");
-    }
-
-    hamburger.addEventListener("click", openMobileNav);
-    closeBtn.addEventListener("click", closeMobileNav);
-    overlay.addEventListener("click", closeMobileNav);
-  </script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -115,37 +94,47 @@
     });
   </script>
 
+
 <script>
-  document.querySelector(".s-services-cards-div").innerHTML = ""
-  const myHeaders = new Headers();
-  const userId = "6883540cf19d2c5397fa0b3e"
+  const loaderWrapper = document.getElementById('loader-wrapper');
+  document.querySelector(".s-services-cards-div").innerHTML = "";
 
-  const API_BASE_URL = "https://1w10dfjm-5000.inc1.devtunnels.ms/"
+  const userId = "6883540cf19d2c5397fa0b3e";
+  const API_BASE_URL = "https://1w10dfjm-5000.inc1.devtunnels.ms/";
 
+  // Show loader at the start
+  loaderWrapper.style.display = 'flex';
 
+  // Fetch data
   fetch(`${API_BASE_URL}api/product/allService?userId=${userId}`)
-  .then((response) => response.json())
-  .then((result) =>{
-    // console.log("result.data :",result.data[0]);
-
-    result.data.map((el,index)=>{
-      console.log("el :",el);
-      
-      const imagePath = `${API_BASE_URL}${el?.mainImage.replace(/\\/g, "/")}`;
-
-      document.querySelector(".s-services-cards-div").innerHTML += `
-      <a href="services1.html">
-        <div class="s-services-card" id="s-services-card-${el.serviceType}">
-          <p id="s-services-${el.serviceType}">${el.name}</p>
-        </div>
-      </a>
-      `
-      document.getElementById(`s-services-card-${el.serviceType}`).style.backgroundImage = `url('${imagePath}')`
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
     })
-  }
-)
+    .then(data => {
+      loaderWrapper.style.display = 'none'; // Hide loader
+      console.log('All data loaded', data);
 
+      data?.data.forEach((el, index) => {
+        const imagePath = `${API_BASE_URL}${el?.mainImage.replace(/\\/g, "/")}`;
+        document.querySelector(".s-services-cards-div").innerHTML += `
+          <a href="services1.html">
+            <div class="s-services-card" id="s-services-card-${el.serviceType}">
+              <p id="s-services-${el.serviceType}">${el.name}</p>
+            </div>
+          </a>
+        `;
+        document.getElementById(`s-services-card-${el.serviceType}`).style.backgroundImage = `url('${imagePath}')`;
+      });
+    })
+    .catch(error => {
+      console.error('Error loading data:', error);
+      loaderWrapper.style.display = 'none'; // Hide loader even on error
+    });
 </script>
+
 
   <script src="scripti.js"></script>
 </body>

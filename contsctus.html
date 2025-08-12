@@ -11,6 +11,9 @@
 </head>
 
 <body>
+    <div id="loader-wrapper">
+  <span class="loader"></span>
+</div>
   <header class="header">
 
   </header>
@@ -101,69 +104,49 @@
   </footer>
 
   <script>
-    const hamburger = document.getElementById("hamburger");
-    const navMenu = document.getElementById("navMenu");
-    const overlay = document.getElementById("overlay");
-    const closeBtn = document.getElementById("closeNavBtn");
+    const loaderWrapper = document.getElementById('loader-wrapper');
 
-    function openMobileNav() {
-      if (window.innerWidth <= 860) {
-        navMenu.classList.add("active");
-        overlay.classList.add("show");
-        overlay.classList.remove("hidden");
-      }
-    }
-
-    function closeMobileNav() {
-      navMenu.classList.remove("active");
-      overlay.classList.remove("show");
-      overlay.classList.add("hidden");
-    }
-
-    hamburger.addEventListener("click", openMobileNav);
-    closeBtn.addEventListener("click", closeMobileNav);
-    overlay.addEventListener("click", closeMobileNav);
-  </script>
-
-  <script>
     const myHeaders = new Headers();
     const userId = "6883540cf19d2c5397fa0b3e"
     const API_BASE_URL = "https://1w10dfjm-5000.inc1.devtunnels.ms/"
 
-    fetch(`${API_BASE_URL}api/contact/Contact?userId=${userId}`)
-      .then((response) => response.json())
-      .then((result) => {
+    // List of all fetch promises
+    const fetchPromises = [
+      fetch(`${API_BASE_URL}api/contact/Contact?userId=${userId}`).then(res => res.json()),
+      fetch(`${API_BASE_URL}api/product/allService?userId=${userId}`).then(res => res.json())
+    ];
 
-        console.log("result :",result);
+    Promise.all(fetchPromises)
+      .then(results => {
+        console.log('All data loaded', results);
+        loaderWrapper.style.display = 'none';
 
-        document.querySelectorAll(".address").forEach(el =>{
-          el.textContent = result.address;
-          el.href = result.addressLink;
+        document.querySelectorAll(".address").forEach(el => {
+          el.textContent = results[0].address;
+          el.href = results[0].addressLink;
         })
 
-        document.querySelectorAll(".mobile-number").forEach(el =>{
-          el.textContent = result.mobileNumber;
-          el.href = `tel:${result.mobileNumber}`;
+        document.querySelectorAll(".mobile-number").forEach(el => {
+          el.textContent = results[0].mobileNumber;
+          el.href = `tel:${results[0].mobileNumber}`;
         })
 
-        document.querySelectorAll(".email").forEach(el =>{
-          el.textContent = result.email;
-          el.href = `mailto:${result.email}`;
+        document.querySelectorAll(".email").forEach(el => {
+          el.textContent = results[0].email;
+          el.href = `mailto:${results[0].email}`;
         })
 
-        document.querySelector(".c-map-section").innerHTML = result.embadedMap;
-      })
+        document.querySelector(".c-map-section").innerHTML = results[0].embadedMap;
 
-          fetch(`${API_BASE_URL}api/product/allService?userId=${userId}`)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("result :", result);
-        result.data.forEach((el, index) => {
+        //all services
+        results[1].data.forEach((el, index) => {
           document.querySelectorAll(`.service${el.serviceType}-name`).forEach(innerEl => innerEl.textContent = el.name)
         })
-      }
-      )
-  
+      })
+      .catch(error => {
+        console.error('Error loading data:', error);
+        loaderWrapper.style.display = 'none'; // Hide loader even on error
+      });
   </script>
 
   <script src="scripti.js"></script>
