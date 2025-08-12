@@ -6,6 +6,7 @@ Promise.all([
   fetch(`${API_BASE_URL}api/product/allService?userId=${userId}`).then(res => res.json())
 ]).then(([contactResult, footerResult, allServices]) => {
 
+console.log("footerResult :",footerResult);
 
   const { address, addressLink, mobileNumber, email } = contactResult
 
@@ -24,8 +25,8 @@ Promise.all([
       });
     });
 
-  const footerLogoUrl =  `${API_BASE_URL}${footerLogo.replace(/\\/g, "/")}`;
-  const headerLogoUrl =  `${API_BASE_URL}${headerLogo.replace(/\\/g, "/")}`;
+  const footerLogoUrl =  `${API_BASE_URL}uploads/${footerLogo.replace(/\\/g, "/")}`;
+  const headerLogoUrl =  `${API_BASE_URL}uploads/${headerLogo.replace(/\\/g, "/")}`;
 
   
 
@@ -51,18 +52,19 @@ Promise.all([
       <div class="fooer-social-links-heading-div">
         <h4 class="footor-social-links-heading">Follow Our On:</h4>
         <div class="fooer-social-links-div">
-        ${facebookLink.trim() !== ""
-      ? `<a href="${facebookLink}" class="facebook">
+        ${!facebookLink || facebookLink.trim() === ""
+      ? "" 
+      : `<a href="${facebookLink}" class="facebook">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="footer-social-link-svg">
         <rect width="24" height="24" fill="none" />
         <path fill="currentColor"
           d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4z" />
       </svg>
     </a>`
-      : ""
     }
-  ${InstagramLink.trim() !== "" ?
-      `<a href=${InstagramLink} class="instagram">
+  ${!InstagramLink || InstagramLink.trim() === "" ? ""
+:
+           `<a href=${InstagramLink} class="instagram">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
               class="footer-social-link-svg">
               <rect width="24" height="24" fill="none" />
@@ -72,11 +74,11 @@ Promise.all([
                 <path stroke-linecap="round" stroke-linejoin="round" d="m17.5 6.51l.01-.011" />
               </g>
             </svg>
-          </a>` :
-      ""
+          </a>` 
     }
-          ${linkedinLink.trim() !== "" ?
-      `<a href=${linkedinLink} class="linkedin">
+          ${!linkedinLink || linkedinLink.trim() === "" ? ""
+       :
+     `<a href=${linkedinLink} class="linkedin">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
               class="footer-social-link-svg">
               <rect width="24" height="24" fill="none" />
@@ -87,12 +89,13 @@ Promise.all([
                 <path d="M7.2 8.809H4V19.5h3.2z" />
               </g>
             </svg>
-          </a>` :
-      ""
+          </a>`
     }
 
-        ${youtubeLink.trim() !== "" ?
-      `<a href=${youtubeLink} class="youtube">
+        ${!youtubeLink || youtubeLink.trim() === "" ?
+""   
+      :
+         `<a href=${youtubeLink} class="youtube">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
               class="footer-social-link-svg">
               <rect width="24" height="24" fill="none" />
@@ -104,11 +107,11 @@ Promise.all([
               </g>
             </svg>
           </a>`
-      :
-      ""}
+      }
 
-         ${xLink.trim !== "" ?
-      `<a href={xLink} class="X">
+         ${!xLink || xLink.trim() === "" ?
+ ""
+      :      `<a href={xLink} class="X">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
               class="footer-social-link-svg">
               <rect width="16" height="16" fill="none" />
@@ -116,7 +119,6 @@ Promise.all([
                 d="M9.294 6.928L14.357 1h-1.2L8.762 6.147L5.25 1H1.2l5.31 7.784L1.2 15h1.2l4.642-5.436L10.751 15h4.05zM7.651 8.852l-.538-.775L2.832 1.91h1.843l3.454 4.977l.538.775l4.491 6.47h-1.843z" />
             </svg>
           </a>`
-      : ""
     }
         </div>
       </div>
